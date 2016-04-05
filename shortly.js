@@ -8,9 +8,6 @@ var session = require('express-session');
 var db = require('./app/config');
 var Users = require('./app/collections/users');
 var User = require('./app/models/user');
-var Links = require('./app/collections/links');
-var Link = require('./app/models/link');
-var Click = require('./app/models/click');
 var Zipcode = require('./app/models/zipcode');
 var Zipcodes = require('./app/collections/zipcodes');
 
@@ -61,8 +58,8 @@ app.post('/zips', util.checkUser, function(req, res) {
   }
 
   if (util.isValidZip(zip)) {
-    console.log('valid zip found');
-    console.log('check the weather');
+    // console.log('valid zip found');
+    // console.log('check the weather');
 
 
     new Zipcode({ zipcode: zip }).fetch().then(function(found) {
@@ -75,11 +72,11 @@ app.post('/zips', util.checkUser, function(req, res) {
           return res.send(404);
 
         }
-        console.log('going to create stuff.  response body is: ', response);
-        console.log(response.name,
-          ' temperature: ', response.temp,
-          ' wind: ', response.wind,
-          'direction: ', response.direction);
+        // console.log('going to create stuff.  response body is: ', response);
+        // console.log(response.name,
+        //   ' temperature: ', response.temp,
+        //   ' wind: ', response.wind,
+        //   'direction: ', response.direction);
         Zipcodes.create({
           zipcode: zip,
           name: response.name,
@@ -94,33 +91,6 @@ app.post('/zips', util.checkUser, function(req, res) {
     }
   });
   }
-
-  // if (!util.isValidUrl(uri)) {
-  //   console.log('Not a valid url: ', uri);
-  //   return res.send(404);
-  // }
-
-  // new Link({ url: uri }).fetch().then(function(found) {
-  //   if (found) {
-  //     res.send(200, found.attributes);
-  //   } else {
-  //     util.getUrlTitle(uri, function(err, title) {
-  //       if (err) {
-  //         console.log('Error reading URL heading: ', err);
-  //         return res.send(404);
-  //       }
-
-  //       Links.create({
-  //         url: uri,
-  //         title: title,
-  //         baseUrl: req.headers.origin
-  //       })
-  //       .then(function(newLink) {
-  //         res.send(200, newLink);
-  //       });
-  //     });
-  //   }
-  // });
 });
 
 /************************************************************/
@@ -142,15 +112,6 @@ app.post('/login', function(req, res) {
       if (!user) {
         res.redirect('/login');
       } else {
-        // BASIC VERSION
-        // bcrypt.compare(password, user.get('password'), function(err, match) {
-        //   if (match) {
-        //     util.createSession(req, res, user);
-        //   } else {
-        //     res.redirect('/login');
-        //   }
-        // });
-        // ADVANCED VERSION -- see user model
         user.comparePassword(password, function(match) {
           if (match) {
             util.createSession(req, res, user);
@@ -180,15 +141,6 @@ app.post('/signup', function(req, res) {
     .fetch()
     .then(function(user) {
       if (!user) {
-        // BASIC VERSION
-        // bcrypt.hash(password, null, null, function(err, hash) {
-        //   Users.create({
-        //     username: username,
-        //     password: hash
-        //   }).then(function(user) {
-        //       util.createSession(req, res, user);
-        //   });
-        // });
         // ADVANCED VERSION -- see user model
         var newUser = new User({
           username: username,

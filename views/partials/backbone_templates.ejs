@@ -11,17 +11,17 @@
 </script>
 
 <script id='zip' type='text/x-handlebars-template'>
-  <img src='/redirect_icon.png'/>
+{{{thumbTest temperature wind direction}}}
   <div class='info'>
     <div class='title'>{{name}} {{zipcode}}</div>
-    <div class='original'>{{temperature}} degrees with wind at {{wind}}mph from {{direction}}</div>
+    <div class='original'>{{{tempTest temperature}}} degrees with wind at {{{windSpeedTest wind}}} from {{{windDirectionTest direction}}}</div>
   </div>
 </script>
 
 <script id='create' type='text/x-handlebars-template'>
   <form>
-      <input class='text' type='text' name='url'>
-      <input type='submit' value='Shorten'>
+      <input class='text' type='text' name='url' placeholder='Zipcode' maxlength='5' autofocus pattern='[\d]{5}'>
+      <input type='submit' value='Get Weather at Zipcode'>
   </form>
   <img class='spinner' src='/spiffygif_46x46.gif'>
   <div class='message'></div>

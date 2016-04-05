@@ -57,43 +57,32 @@ h1 {
   margin-top: 10px;
 }
 
-.link {
+.zip {
   clear: both;
   margin-bottom: 5px;
   padding: 5px;
   min-height: 50px;
 }
 
-.link:hover {
+.zip:hover {
   background-color: #efe;
 }
 
-.link img {
+.zip img {
   float: left;
-  margin: 0 5px;
+  margin: 5px;
 }
 
-.link .visits {
-  float: right;
-  margin-right: 10px;
-  margin-left: 20px;
-}
-
-.link .visits .count {
-  font-size: 46px;
+.zip .title {
   font-weight: 600;
 }
 
-.link .title {
-  font-weight: 600;
-}
-
-.link .original {
+.zip .original {
   color: #aaa;
   font-size: 12px;
 }
 
-.link .info {
+.zip .info {
   margin-left: 55px;
 }
 
@@ -134,4 +123,16 @@ form input[type=text], form input[type=password] {
 
 .creator .message {
   clear: both;
+}
+
+.good {
+  color: green;
+}
+
+.low {
+  color: blue;
+}
+
+.bad {
+  color: red;
 }
