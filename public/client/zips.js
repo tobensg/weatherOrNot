@@ -1,4 +1,4 @@
-Shortly.Zips = Backbone.Collection.extend({
-  model: Shortly.Zip,
+Weather.Zips = Backbone.Collection.extend({
+  model: Weather.Zip,
   url: '/zips'
 });

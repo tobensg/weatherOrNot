@@ -1,3 +1,3 @@
-Shortly.Zip = Backbone.Model.extend({
+Weather.Zip = Backbone.Model.extend({
   urlRoot: '/zips'
 });

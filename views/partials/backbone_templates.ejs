@@ -13,15 +13,36 @@
 <script id='zip' type='text/x-handlebars-template'>
 {{{thumbTest temperature wind direction}}}
   <div class='info'>
-    <div class='title'>{{name}} {{zipcode}}</div>
+    <div class='title'>{{name}} <span class="zipcode">{{zipcode}}</span></div>
     <div class='original'>{{{tempTest temperature}}} degrees with wind at {{{windSpeedTest wind}}} from {{{windDirectionTest direction}}}</div>
   </div>
 </script>
 
+<script id='zipconstraint' type='text/x-handlebars-template'>
+
+  <div class='info'>
+    <div class='title'>TIME TO ADD CONSTRAINTS</div>
+  </div>
+
+  <form class="constraintsForm" action="constraints">
+      <input type = "checkbox" id="temp"> Require temperature
+      <input class='constraint' type='text' id='tempHi' placeholder='98' maxlength='3' pattern='[\d]*' size="5"> <input class='constraint' type='text' id='tempLow' placeholder='60' maxlength='3' pattern='[\d]*' size="5">
+
+      <input type = "checkbox" id="wind"> Require windspeed
+      <input class='constraint' type='text' id='windHi' placeholder='10' maxlength='3' pattern='[\d]*' size="5"> <input class='constraint' type='text' id='windLow' placeholder='0' maxlength='3' pattern='[\d]*' size="5">
+
+      <input type = "checkbox" id="windDir"> Require wind direction
+      <input class='constraint' type='text' id='windTop' placeholder='0' maxlength='3' pattern='[\d]*' size="5"> <input class='constraint' type='text' id='windBottom' placeholder='359' maxlength='3' pattern='[\d]*' size="5">
+
+      <input type='submit' value='Add constraints to Zipcode' name="constraintSubmit">
+  </form>
+
+</script>
+
 <script id='create' type='text/x-handlebars-template'>
-  <form>
+  <form class="zipsForm">
       <input class='text' type='text' name='url' placeholder='Zipcode' maxlength='5' autofocus pattern='[\d]{5}'>
-      <input type='submit' value='Get Weather at Zipcode'>
+      <input type='submit' value='Get Weather at Zipcode' name='zipSubmit' id='zipSubit'>
   </form>
   <img class='spinner' src='/spiffygif_46x46.gif'>
   <div class='message'></div>

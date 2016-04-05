@@ -2,7 +2,7 @@ var path = require('path');
 var knex = require('knex')({
   client: 'sqlite3',
   connection: {
-    filename: path.join(__dirname, '../db/shortly.sqlite')
+    filename: path.join(__dirname, '../db/weather.sqlite')
   }
 });
 var db = require('bookshelf')(knex);
@@ -35,6 +35,27 @@ db.knex.schema.hasTable('zipcodes').then(function(exists) {
       zipcode.string('wind', 30);
       zipcode.string('direction', 30);
       zipcode.timestamps();
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
+  }
+});
+
+db.knex.schema.hasTable('zipconstraints').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('zipconstraints', function (zipconstraint) {
+      zipconstraint.increments('id').primary();
+      zipconstraint.integer('zipcodeId');
+      zipconstraint.integer('temperatureBoolean', 1);
+      zipconstraint.integer('temperatureHigh');
+      zipconstraint.integer('temperatureLow');
+      zipconstraint.integer('windBoolean', 1);
+      zipconstraint.integer('windHigh');
+      zipconstraint.integer('windLow');
+      zipconstraint.integer('directionBoolean', 1);
+      zipconstraint.integer('directionHigh');
+      zipconstraint.integer('directionLow');
+      zipconstraint.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });

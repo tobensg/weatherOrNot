@@ -1,4 +1,4 @@
-window.Shortly = Backbone.View.extend({
+window.Weather = Backbone.View.extend({
   template: Templates['layout'],
 
   events: {
@@ -7,10 +7,10 @@ window.Shortly = Backbone.View.extend({
   },
 
   initialize: function() {
-    console.log( 'Shortly is running' );
+    console.log( 'Weather app is running' );
     $('body').append(this.render().el);
 
-    this.router = new Shortly.Router({ el: this.$el.find('#container') });
+    this.router = new Weather.Router({ el: this.$el.find('#container') });
     this.router.on('route', this.updateNav, this);
 
     Backbone.history.start({ pushState: true });

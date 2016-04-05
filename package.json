@@ -1,8 +1,8 @@
 {
-  "name": "shortly-express",
+  "name": "Weather or not",
   "version": "0.0.1",
-  "description": "shortly using express",
-  "main": "shortly.js",
+  "description": "Weather using express",
+  "main": "weather.js",
   "repository": "",
   "license": "Proprietary",
   "private": true,

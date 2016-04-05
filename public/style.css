@@ -91,11 +91,18 @@ form {
 }
 
 form input[type=text], form input[type=password] {
-  width: 360px;
   display: block;
   font-size: 13px;
   padding: 5px;
   margin-bottom: 5px;
+}
+
+.text {
+    width: 360px;
+}
+
+.password {
+  width: 360px;
 }
 
 .error {
@@ -135,4 +142,8 @@ form input[type=text], form input[type=password] {
 
 .bad {
   color: red;
+}
+
+.constraint {
+  width: 20px;
 }

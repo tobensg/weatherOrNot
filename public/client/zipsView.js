@@ -1,4 +1,4 @@
-Shortly.ZipsView = Backbone.View.extend({
+Weather.ZipsView = Backbone.View.extend({
   className: 'zips',
 
   initialize: function() {
@@ -16,7 +16,7 @@ Shortly.ZipsView = Backbone.View.extend({
   },
 
   addOne: function(item) {
-    var view = new Shortly.ZipView({ model: item });
+    var view = new Weather.ZipView({ model: item });
     this.$el.append(view.render().el);
   }
 });

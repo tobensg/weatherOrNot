@@ -10,6 +10,8 @@ var Users = require('./app/collections/users');
 var User = require('./app/models/user');
 var Zipcode = require('./app/models/zipcode');
 var Zipcodes = require('./app/collections/zipcodes');
+var Zipconstraint = require('./app/models/zipconstraint');
+var Zipconstraints = require('./app/collections/zipconstraints');
 
 
 var app = express();
@@ -38,58 +40,63 @@ app.get('/create', util.checkUser, function(req, res) {
 });
 
 app.get('/zips', util.checkUser, function(req, res) {
-  console.log('got links request');
+  // console.log('got links request');
   Zipcodes.reset().fetch().then(function(zips) {
-    console.log('build zips');
+    // console.log('build zips');
     res.send(200, zips.models);
   });
 });
 
 app.post('/zips', util.checkUser, function(req, res) {
-  var uri = req.body.url;
+  // var uri = req.body.url;
   var zip = req.body.zip;
 
   console.log('in links post***********************');
-  console.log(req.body);
+  // console.log(req.body);
+  if (zip === undefined) {
+    console.log ('we should be doing the store constraints tree');
+    Zipconstraints.create({
+      temperatureBoolean: req.body.temperatureBoolean,
+      temperatureHigh: req.body.temperatureHigh,
+      temperatureLow: req.body.temperatureLow,
+      windBoolean: req.body.windBoolean,
+      windHigh: req.body.windHigh,
+      windLow: req.body.windLow,
+      directionBoolean: req.body.directionBoolean,
+      directionHigh: req.body.directionHigh,
+      directionLow: req.body.directionLow
+    }).then(function(newConstraint){
+      res.send(200, newConstraint);
+    })
 
-  if (!util.isValidZip(zip)) {
-    console.log('Not a valid zip: ', zip);
-    return res.send(404);
-  }
-
-  if (util.isValidZip(zip)) {
-    // console.log('valid zip found');
-    // console.log('check the weather');
-
-
-    new Zipcode({ zipcode: zip }).fetch().then(function(found) {
-    if (found) {
-      res.send(200, found.attributes);
+  } else {
+    if (!util.isValidZip(zip)) {
+      console.log('Not a valid zip: ', zip);
+      return res.send(404);
     } else {
-      util.getWeatherInfo(zip, function(err, response) {
-        if (err) {
-          console.log('**********Error reading ZIP heading: *****', err);
-          return res.send(404);
-
+      new Zipcode({ zipcode: zip }).fetch().then(function(found) {
+        if (found) {
+          res.send(200, found.attributes);
+        } else {
+          util.getWeatherInfo(zip, function(err, response) {
+            if (err) {
+              console.log('**********Error reading ZIP heading: *****', err);
+              return res.send(404);
+            }
+            Zipcodes.create({
+              zipcode: zip,
+              name: response.name,
+              temperature: response.temp,
+              wind: response.wind,
+              direction: response.direction,
+            })
+            .then(function(newZip) {
+              res.send(200, newZip);
+            });
+          });
         }
-        // console.log('going to create stuff.  response body is: ', response);
-        // console.log(response.name,
-        //   ' temperature: ', response.temp,
-        //   ' wind: ', response.wind,
-        //   'direction: ', response.direction);
-        Zipcodes.create({
-          zipcode: zip,
-          name: response.name,
-          temperature: response.temp,
-          wind: response.wind,
-          direction: response.direction,
-        })
-        .then(function(newZip) {
-          res.send(200, newZip);
-        });
       });
     }
-  });
   }
 });
 
