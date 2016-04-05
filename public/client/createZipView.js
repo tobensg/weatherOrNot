@@ -1,4 +1,4 @@
-Shortly.createLinkView = Backbone.View.extend({
+Shortly.createZipView = Backbone.View.extend({
   className: 'creator',
 
   template: Templates['create'],
@@ -15,20 +15,12 @@ Shortly.createLinkView = Backbone.View.extend({
   shortenUrl: function(e) {
     e.preventDefault();
     var $form = this.$el.find('form .text');
-    // var link = new Shortly.Link({ url: $form.val(), zip: $form.val()});
     var zip = new Shortly.Zip({zip: $form.val()});
     console.log('in shortenUrl in CLV ++++++++++++++++');
     console.log(zip);
     zip.on('request', this.startSpinner, this);
     zip.on('sync', this.success, this);
     zip.on('error', this.failure, this);
-
-    // zip.on('request', this.startSpinner, this);
-    // zip.on('sync', this.success, this);
-    // zip.on('error', this.failure, this);
-
-
-    // zip.save({});
     zip.save({})
     $form.val('');
   },
@@ -39,13 +31,6 @@ Shortly.createLinkView = Backbone.View.extend({
     this.$el.find('.message').append(view.render().$el.hide().fadeIn());
   },
 
-  // success: function(zip) {
-  //   this.stopSpinner();
-  //   var view = new Shortly.LinkView({ model: link });
-  //   this.$el.find('.message').append(view.render().$el.hide().fadeIn());
-  //   // var view2 = new Shortly.ZipView({ model: zip });
-  //   // this.$el.find('.message').append(view2.render().$el.hide().fadeIn());
-  // },
 
   failure: function(model, res) {
     this.stopSpinner();
