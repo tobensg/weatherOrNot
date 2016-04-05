@@ -55,19 +55,29 @@ app.post('/zips', util.checkUser, function(req, res) {
   // console.log(req.body);
   if (zip === undefined) {
     console.log ('we should be doing the store constraints tree');
-    Zipconstraints.create({
-      temperatureBoolean: req.body.temperatureBoolean,
-      temperatureHigh: req.body.temperatureHigh,
-      temperatureLow: req.body.temperatureLow,
-      windBoolean: req.body.windBoolean,
-      windHigh: req.body.windHigh,
-      windLow: req.body.windLow,
-      directionBoolean: req.body.directionBoolean,
-      directionHigh: req.body.directionHigh,
-      directionLow: req.body.directionLow
-    }).then(function(newConstraint){
-      res.send(200, newConstraint);
-    })
+
+    new Zipcode({ zipcode: req.body.relatedZip }).fetch().then(function(found) {
+      if (found) {
+        console.log('found a match.  showing attributes: ', found.attributes.id);
+        Zipconstraints.create({
+          zipcodeId: found.attributes.id,
+          temperatureBoolean: req.body.temperatureBoolean,
+          temperatureHigh: req.body.temperatureHigh,
+          temperatureLow: req.body.temperatureLow,
+          windBoolean: req.body.windBoolean,
+          windHigh: req.body.windHigh,
+          windLow: req.body.windLow,
+          directionBoolean: req.body.directionBoolean,
+          directionHigh: req.body.directionHigh,
+          directionLow: req.body.directionLow
+        }).then(function(newConstraint){
+          res.send(200, newConstraint);
+        })
+      } else {
+        console.log('no match... check your stuff: ', req.body.relatedZip);
+        return res.send(404);
+      }
+    });
 
   } else {
     if (!util.isValidZip(zip)) {

@@ -17,10 +17,10 @@ Weather.createZipView = Backbone.View.extend({
     e.preventDefault();
     var whichForm = e.target.className;
     if (whichForm === "zipsForm") {
-      console.log('we are in the zip form.  calling pullZip');
+      // console.log('we are in the zip form.  calling pullZip');
       this.pullZip();
     } else {
-      console.log('not doing pullzip... do something else');
+      // console.log('not doing pullzip... do something else');
       this.addConstraints();
     }
   },
@@ -39,10 +39,11 @@ Weather.createZipView = Backbone.View.extend({
 
 
   addConstraints: function(e) {
-    // e.preventDefault();
-    // getElementById
+
     var constraints = {}; 
-    console.log('can we access the zip?', this.$el);
+    // console.log('can we access the zip?', this.$el.find('.zipcode'));
+    var foundZip = this.$el.find('.zipcode');
+
     constraints.tempReq = this.$el.find('#temp').val() === "on" ? 1 : 0;
     constraints.tempHi = this.$el.find('#tempHi').val();
     constraints.tempLow = this.$el.find('#tempLow').val();
@@ -55,6 +56,7 @@ Weather.createZipView = Backbone.View.extend({
 
     console.log('the constraints object', constraints);
     var zipconstraint = new Weather.ZipConstraint({
+      relatedZip: foundZip.text(),
       temperatureBoolean: constraints.tempReq,
       temperatureHigh: constraints.tempHi,
       temperatureLow: constraints.tempLow,
@@ -66,8 +68,8 @@ Weather.createZipView = Backbone.View.extend({
       directionLow: constraints.windBottom
     });
 
-    console.log('in pullZipConstraint in CLV ++++++++++++++++');
-    console.log(zipconstraint);
+    // console.log('in pullZipConstraint in CLV ++++++++++++++++');
+    // console.log(zipconstraint);
     // zip.on('request', this.startSpinner, this);
     // zip.on('sync', this.success, this);
     // zip.on('error', this.failure, this);
