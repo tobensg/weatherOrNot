@@ -1,3 +1,3 @@
 Shortly.Zip = Backbone.Model.extend({
-  urlRoot: '/links'
+  urlRoot: '/zips'
 });

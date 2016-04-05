@@ -40,13 +40,15 @@ app.get('/create', util.checkUser, function(req, res) {
   res.render('index');
 });
 
-app.get('/links', util.checkUser, function(req, res) {
-  Links.reset().fetch().then(function(links) {
-    res.send(200, links.models);
+app.get('/zips', util.checkUser, function(req, res) {
+  console.log('got links request');
+  Zipcodes.reset().fetch().then(function(zips) {
+    console.log('build zips');
+    res.send(200, zips.models);
   });
 });
 
-app.post('/links', util.checkUser, function(req, res) {
+app.post('/zips', util.checkUser, function(req, res) {
   var uri = req.body.url;
   var zip = req.body.zip;
 
@@ -80,10 +82,10 @@ app.post('/links', util.checkUser, function(req, res) {
           'direction: ', response.direction);
         Zipcodes.create({
           zipcode: zip,
-          // name: response.name,
-          // temperature: response.temp,
-          // wind: response.wind,
-          // direction: response.direction,
+          name: response.name,
+          temperature: response.temp,
+          wind: response.wind,
+          direction: response.direction,
         })
         .then(function(newZip) {
           res.send(200, newZip);

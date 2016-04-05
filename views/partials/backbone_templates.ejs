@@ -1,8 +1,8 @@
 <script id='layout' type='text/x-handlebars-template'>
   <div class='navigation'>
   <ul>
-    <li><a href='#' class='index'>All Links</a></li>
-    <li><a href='#' class='create'>Shorten</a></li>
+    <li><a href='#' class='index'>All sites</a></li>
+    <li><a href='#' class='create'>Fetch Weather</a></li>
   </ul>
 
     <a href='/logout' class='logout'>Logout</a>
@@ -14,9 +14,17 @@
   <img src='/redirect_icon.png'/>
   <div class='info'>
     <div class='visits'><span class='count'>{{visits}}</span>Visits</div>
-    <div class='title'>{{title}}</div>
-    <div class='original'>{{url}}</div>
-    <a href='{{baseUrl}}/{{code}}'>{{baseUrl}}/{{code}}</a>
+    <div class='title'>{{name}} {{zipcode}} {{temperature}} {{wind}} {{direction}} add some test</div>
+    <div class='original'>{{url}} url</div>
+    <a href='{{baseUrl}}/{{code}}'>{{baseUrl}}/{{code}} url and such</a>
+  </div>
+</script>
+
+<script id='zip' type='text/x-handlebars-template'>
+  <img src='/redirect_icon.png'/>
+  <div class='info'>
+    <div class='title'>{{name}} {{zipcode}}</div>
+    <div class='original'>{{temperature}} degrees with wind at {{wind}}mph from {{direction}}</div>
   </div>
 </script>
 

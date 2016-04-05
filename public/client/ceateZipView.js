@@ -1,4 +1,4 @@
-Shortly.createLinkView = Backbone.View.extend({
+Shortly.createZipView = Backbone.View.extend({
   className: 'creator',
 
   template: Templates['create'],
@@ -15,7 +15,6 @@ Shortly.createLinkView = Backbone.View.extend({
   shortenUrl: function(e) {
     e.preventDefault();
     var $form = this.$el.find('form .text');
-    // var link = new Shortly.Link({ url: $form.val(), zip: $form.val()});
     var zip = new Shortly.Zip({zip: $form.val()});
     console.log('in shortenUrl in CLV ++++++++++++++++');
     console.log(zip);

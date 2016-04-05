@@ -13,9 +13,9 @@ Shortly.Router = Backbone.Router.extend({
   },
 
   index: function() {
-    var links = new Shortly.Links();
-    var linksView = new Shortly.LinksView({ collection: links });
-    this.swapView(linksView);
+    var zips = new Shortly.Zips();
+    var zipsView = new Shortly.ZipsView({ collection: zips });
+    this.swapView(zipsView);
   },
 
   create: function() {
