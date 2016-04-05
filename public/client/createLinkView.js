@@ -31,6 +31,14 @@ Shortly.createLinkView = Backbone.View.extend({
     this.$el.find('.message').append(view.render().$el.hide().fadeIn());
   },
 
+  // success: function(zip) {
+  //   this.stopSpinner();
+  //   var view = new Shortly.LinkView({ model: link });
+  //   this.$el.find('.message').append(view.render().$el.hide().fadeIn());
+  //   // var view2 = new Shortly.ZipView({ model: zip });
+  //   // this.$el.find('.message').append(view2.render().$el.hide().fadeIn());
+  // },
+
   failure: function(model, res) {
     this.stopSpinner();
     this.$el.find('.message')

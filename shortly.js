@@ -71,18 +71,19 @@ app.post('/links', util.checkUser, function(req, res) {
         if (err) {
           console.log('**********Error reading ZIP heading: *****', err);
           return res.send(404);
+
         }
-        console.log('going to create stuff.  response body is: ');
-        // console.log(response.name,
-        //   ' temperature: ', response.main.temp,
-        //   ' wind: ', response.wind.speed,
-        //   'direction: ', response.wind.deg);
+        console.log('going to create stuff.  response body is: ', response);
+        console.log(response.name,
+          ' temperature: ', response.temp,
+          ' wind: ', response.wind,
+          'direction: ', response.direction);
         Zipcodes.create({
           zipcode: zip,
           // name: response.name,
-          // temperature: response.main.temp,
-          // wind: response.wind.speed,
-          // direction: response.wind.deg,
+          // temperature: response.temp,
+          // wind: response.wind,
+          // direction: response.direction,
         })
         .then(function(newZip) {
           res.send(200, newZip);
@@ -92,32 +93,32 @@ app.post('/links', util.checkUser, function(req, res) {
   });
   }
 
-  if (!util.isValidUrl(uri)) {
-    console.log('Not a valid url: ', uri);
-    return res.send(404);
-  }
+  // if (!util.isValidUrl(uri)) {
+  //   console.log('Not a valid url: ', uri);
+  //   return res.send(404);
+  // }
 
-  new Link({ url: uri }).fetch().then(function(found) {
-    if (found) {
-      res.send(200, found.attributes);
-    } else {
-      util.getUrlTitle(uri, function(err, title) {
-        if (err) {
-          console.log('Error reading URL heading: ', err);
-          return res.send(404);
-        }
+  // new Link({ url: uri }).fetch().then(function(found) {
+  //   if (found) {
+  //     res.send(200, found.attributes);
+  //   } else {
+  //     util.getUrlTitle(uri, function(err, title) {
+  //       if (err) {
+  //         console.log('Error reading URL heading: ', err);
+  //         return res.send(404);
+  //       }
 
-        Links.create({
-          url: uri,
-          title: title,
-          baseUrl: req.headers.origin
-        })
-        .then(function(newLink) {
-          res.send(200, newLink);
-        });
-      });
-    }
-  });
+  //       Links.create({
+  //         url: uri,
+  //         title: title,
+  //         baseUrl: req.headers.origin
+  //       })
+  //       .then(function(newLink) {
+  //         res.send(200, newLink);
+  //       });
+  //     });
+  //   }
+  // });
 });
 
 /************************************************************/
