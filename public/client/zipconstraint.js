@@ -1,3 +1,3 @@
-Weather.ZipConstraint = Backbone.Model.extend({
-  urlRoot: '/zips'
+Weather.Zipconstraint = Backbone.Model.extend({
+  urlRoot: '/zipconstraint'
 });

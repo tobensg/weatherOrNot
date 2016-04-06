@@ -47,11 +47,25 @@ app.get('/zips', util.checkUser, function(req, res) {
   });
 });
 
+app.get('/zipconstraint', util.checkUser, function(req, res) {
+  // console.log('got ZC request!!!!!!!!!!!!!!!!**************************************');
+  // console.log(req);
+  new Zipconstraint({ zipcodeId: req.body.zipcodeId }).fetch().then(function(found) {
+        if (found) {
+          console.log('got one!: ', found.attributes);
+          res.send(200, found.attributes);
+        } else {
+          // console.log('no');
+          return res.send(200, null);
+        }
+      });
+});
+
 app.post('/zips', util.checkUser, function(req, res) {
   // var uri = req.body.url;
   var zip = req.body.zip;
 
-  console.log('in links post***********************');
+  // console.log('in links post***********************');
   // console.log(req.body);
   if (zip === undefined) {
     console.log ('we should be doing the store constraints tree');
@@ -180,24 +194,24 @@ app.post('/signup', function(req, res) {
 // If the short-code doesn't exist, send the user to '/'
 /************************************************************/
 
-app.get('/*', function(req, res) {
-  new Link({ code: req.params[0] }).fetch().then(function(link) {
-    if (!link) {
-      res.redirect('/');
-    } else {
-      var click = new Click({
-        linkId: link.get('id')
-      });
+// app.get('/*', function(req, res) {
+//   new Link({ code: req.params[0] }).fetch().then(function(link) {
+//     if (!link) {
+//       res.redirect('/');
+//     } else {
+//       var click = new Click({
+//         linkId: link.get('id')
+//       });
 
-      click.save().then(function() {
-        link.set('visits', link.get('visits') + 1);
-        link.save().then(function() {
-          return res.redirect(link.get('url'));
-        });
-      });
-    }
-  });
-});
+//       click.save().then(function() {
+//         link.set('visits', link.get('visits') + 1);
+//         link.save().then(function() {
+//           return res.redirect(link.get('url'));
+//         });
+//       });
+//     }
+//   });
+// });
 
-console.log('Shortly is listening on 4568');
+console.log('Weather is listening on 4568');
 app.listen(4568);
